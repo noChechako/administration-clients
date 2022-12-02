@@ -23,6 +23,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=administration-clients-db
+      - PGDATA=/var/lib/postgresql/data
     volumes:
       - ./db_data:/var/lib/postgresql/data
       - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
