@@ -9,12 +9,14 @@ export class AccountRepositoryService {
     /**
      * Constructor
      */
-    constructor(@InjectRepository(Account) private readonly repo: Repository<Account>) {
+    constructor(
+        @InjectRepository(Account) private readonly accountRepository: Repository<Account>,
+    ) {
     }
 
     public async save(accountCreateDto: AccountCreateDto | Account): Promise<Account> {
         try {
-            return this.repo.save(accountCreateDto);
+            return this.accountRepository.save(accountCreateDto);
         } catch (e) {
             throw new InternalServerErrorException()
         }
@@ -22,7 +24,7 @@ export class AccountRepositoryService {
 
     public async findOne(id: string): Promise<Account | null> {
         try {
-            return await this.repo.findOneByOrFail({id});
+            return await this.accountRepository.findOneByOrFail({id});
         } catch (e) {
             return null;
         }

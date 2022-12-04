@@ -5,10 +5,14 @@ import {BalanceRefillUpdateDto} from "../../controller/accounts/dto/request/bala
 import {GetBalanceDto} from "../../controller/accounts/dto/response/get-balance.dto";
 import {ChangeBalanceTypeEnum} from "../../utils/enums/change-balance-type.enum";
 import {AccountRepositoryService} from "../../repository/accounts/account-repository.service";
+import {TransactionRepositoryService} from "../../repository/transactions/transaction-repository.service";
+import {DAY_IN_SEC} from "../../utils/constans/constans";
+import formatDate from "../../utils/functions/get-date";
 
 @Injectable()
 export class AccountService {
-    constructor(protected readonly accountRepository: AccountRepositoryService) {
+    constructor(protected readonly accountRepository: AccountRepositoryService,
+                protected readonly transactionRepository: TransactionRepositoryService) {
     }
 
     public async createAccount(accountCreateDto: AccountCreateDto): Promise<Account> {
@@ -23,21 +27,49 @@ export class AccountService {
             throw new NotFoundException(`Account with id:${id} not found`);
         }
 
+        const today = Date.now();
+        const beforeDay = formatDate(new Date(today - (DAY_IN_SEC * 100)));
+        const nextDay = formatDate(new Date(today + (DAY_IN_SEC * 100)));
+
+        const todayTransactions = await this.transactionRepository.findAllByDay(id, beforeDay, nextDay);
+
+        const allDecreaseOnDay = todayTransactions.reduce(
+            function (sum, currentTransaction) {
+                return sum + (-currentTransaction.value);
+            },
+            0
+        )
+
+        let value;
         switch (type) {
             case ChangeBalanceTypeEnum.INCREASE:
-                account.balance += balanceRefillUpdateDto.balance;
+                account.balance += balanceRefillUpdateDto.value;
+                value = balanceRefillUpdateDto.value
                 break;
             case ChangeBalanceTypeEnum.DECREASE:
-                if (account.balance - balanceRefillUpdateDto.balance < 0) {
+                if (account.balance - balanceRefillUpdateDto.value < 0) {
                     throw new ConflictException(`Balance cannot be less than 0`);
                 }
-                account.balance -= balanceRefillUpdateDto.balance;
+                if (account.dailyWithdrawalLimit < allDecreaseOnDay + balanceRefillUpdateDto.value) {
+                    const allowMoney = (allDecreaseOnDay + balanceRefillUpdateDto.value) - account.dailyWithdrawalLimit
+                    throw new ConflictException(`You cannot get ${allDecreaseOnDay + balanceRefillUpdateDto.value} on a day. The limit will be exceeded by ${allowMoney}`);
+                }
+                account.balance -= balanceRefillUpdateDto.value;
+                value = -balanceRefillUpdateDto.value
                 break;
             default:
                 break;
         }
 
         const updatedAccount = await this.accountRepository.save(account);
+
+        const transaction = {
+            accountId: account.id,
+            value,
+            transactionDate: new Date().toISOString(),
+        }
+        await this.transactionRepository.save(transaction);
+
         return Object.assign(account, updatedAccount);
     }
 
@@ -49,7 +81,7 @@ export class AccountService {
         }
 
         return {
-            balance:account.balance
+            balance: account.balance
         };
     }
 }

@@ -1,23 +1,15 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {IsEnum, IsNumber, IsPositive} from 'class-validator';
-import {ChangeBalanceTypeEnum} from "../../../../utils/enums/change-balance-type.enum";
+import {ApiProperty} from '@nestjs/swagger';
+import {IsNumber, IsPositive} from 'class-validator';
 
 export class BalanceRefillUpdateDto {
     /**
-     * Column "balance"
+     * Column "value"
      */
     @ApiProperty({
-        description: 'balance',
+        description: 'value',
         example: 1.3,
     })
     @IsNumber()
     @IsPositive()
-    balance: number;
-
-    @ApiProperty({
-        description: 'type of changing balance',
-        enum: ChangeBalanceTypeEnum,
-    })
-    @IsEnum(ChangeBalanceTypeEnum)
-    type: ChangeBalanceTypeEnum;
+    value: number;
 }
