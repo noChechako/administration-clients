@@ -27,6 +27,10 @@ export class AccountService {
             throw new NotFoundException(`Account with id:${id} not found`);
         }
 
+        if (!account.active) {
+            throw new ConflictException(`Account with id:${id} doesn't active`);
+        }
+
         const today = Date.now();
         const beforeDay = formatDate(new Date(today - (DAY_IN_SEC * 100)));
         const nextDay = formatDate(new Date(today + (DAY_IN_SEC * 100)));
@@ -83,5 +87,18 @@ export class AccountService {
         return {
             balance: account.balance
         };
+    }
+
+    public async changeStatus(id: string, active: boolean): Promise<Account> {
+        const account = await this.accountRepository.findOne(id);
+
+        if (!account) {
+            throw new NotFoundException(`Account with id:${id} not found`);
+        }
+
+        account.active = active;
+        const updatedAccount = await this.accountRepository.save(account);
+
+        return Object.assign(account, updatedAccount);
     }
 }

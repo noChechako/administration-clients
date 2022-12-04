@@ -8,6 +8,7 @@ export class AccountCreateDto {
     @ApiProperty({
         description: 'personId',
         example: '759ce177-ada1-4c78-a41e-6bea2eb5709b',
+        required: true
     })
     @IsString()
     personId: string;
@@ -18,6 +19,7 @@ export class AccountCreateDto {
     @ApiProperty({
         description: 'balance',
         example: 1.3,
+        required: true
     })
     @IsNumber()
     @IsPositive()
@@ -29,6 +31,7 @@ export class AccountCreateDto {
     @ApiProperty({
         description: 'dailyWithdrawalLimit',
         example: 100,
+        required: true
     })
     @IsNumber()
     @IsPositive()
@@ -50,6 +53,7 @@ export class AccountCreateDto {
     @ApiProperty({
         description: 'accountType',
         example: 1,
+        required: true
     })
     @IsNumber()
     @IsPositive()

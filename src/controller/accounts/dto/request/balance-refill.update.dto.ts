@@ -8,6 +8,7 @@ export class BalanceRefillUpdateDto {
     @ApiProperty({
         description: 'value',
         example: 1.3,
+        required: true
     })
     @IsNumber()
     @IsPositive()
