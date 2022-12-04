@@ -5,21 +5,21 @@ import { BaseEntity } from './base.entity';
 export class Account extends BaseEntity {
 
     @Column({type: 'uuid'})
-    person_id: string;
+    personId: string;
 
     @Column({ type: 'double precision' })
     balance: number;
 
     @Column({ type: 'double precision' })
-    daily_withdrawal_limit: number;
+    dailyWithdrawalLimit: number;
 
     @Column({ type: 'boolean' })
     active: boolean;
 
     @Column({ type: 'integer' })
-    account_type: number;
+    accountType: number;
 
     @Column({ type: 'date' })
-    create_date: string;
+    createDate: string;
 
 }

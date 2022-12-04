@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import {AccountService} from "./account.service";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {Account} from "../../model/account.entity";
+import {AccountsRepositoryModule} from "../../repository/accounts/accounts-repository.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Account])],
+    imports: [AccountsRepositoryModule],
     providers: [ AccountService ],
     exports: [ AccountService ],
 })

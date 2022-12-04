@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 require('dotenv').config();
 
@@ -24,6 +25,10 @@ class ConfigService {
         return this.getValue('PORT', true);
     }
 
+    public getLimitBalanceCheck() {
+        return this.getValue('LIMIT_GET_BALANCE', true);
+    }
+
     public getTypeOrmConfig(): TypeOrmModuleOptions {
         return {
             type: 'postgres',
@@ -32,7 +37,8 @@ class ConfigService {
             username: this.getValue('POSTGRES_USER'),
             password: this.getValue('POSTGRES_PASSWORD'),
             database: this.getValue('POSTGRES_DATABASE'),
-            entities: ["dist/**/*.entity.js"]
+            entities: ["dist/**/*.entity.js"],
+            namingStrategy: new SnakeNamingStrategy()
         };
     }
 
