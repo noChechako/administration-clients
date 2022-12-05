@@ -25,6 +25,8 @@ import {
 import { ChangeBalanceTypeEnum } from '../../utils/enums/change-balance-type.enum';
 import { SkipThrottle } from '@nestjs/throttler';
 import { AuthGuard } from '@nestjs/passport';
+import { CookieUser } from '../../utils/decorators/get-cookie-user';
+import { LoginDto } from '../../auth/dto/login.dto';
 
 /**
  * Controller class for 'accounts' endpoint
@@ -68,11 +70,13 @@ export class AccountController {
         @Param('id', ParseUUIDPipe) id: string,
         @Query('type') type: ChangeBalanceTypeEnum,
         @Body() balanceRefillUpdateDto: BalanceRefillUpdateDto,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<Account> {
         return this.accountService.changeBalance(
             id,
             type,
             balanceRefillUpdateDto,
+            cookieUser.username,
         );
     }
 
@@ -88,8 +92,13 @@ export class AccountController {
     async changeStatus(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('active') active: boolean,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<Account> {
-        return this.accountService.changeStatus(id, active);
+        return this.accountService.changeStatus(
+            id,
+            active,
+            cookieUser.username,
+        );
     }
 
     /**
@@ -103,7 +112,8 @@ export class AccountController {
     @Get('/:id/get-balance')
     async getBalance(
         @Param('id', ParseUUIDPipe) id: string,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<GetBalanceDto> {
-        return this.accountService.getBalance(id);
+        return this.accountService.getBalance(id, cookieUser.username);
     }
 }

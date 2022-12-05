@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 /**
  * DTO for creating "Account"
@@ -10,8 +10,9 @@ export class LoginDto {
      */
     @ApiProperty({
         description: 'name',
-        example: 'john',
+        example: 'John Doe',
+        required: true,
     })
     @IsString()
-    name: string;
+    username: string;
 }

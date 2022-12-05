@@ -1,20 +1,20 @@
 version: '3.8'
 
 services:
-  main:
-    container_name: main
-    build:
-      context: .
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - 3000:3000
-    command: npm run start
-    env_file:
-      - .env
-    depends_on:
-      - administration-clients
+#  main:
+#    container_name: main
+#    build:
+#      context: .
+#    volumes:
+#      - .:/usr/src/app
+#      - /usr/src/app/node_modules
+#    ports:
+#      - 3000:3000
+#    command: npm run start
+#    env_file:
+#      - .env
+#    depends_on:
+#      - administration-clients
   administration-clients:
     image: "postgres:13-alpine"
     restart: always

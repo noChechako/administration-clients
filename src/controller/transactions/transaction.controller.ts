@@ -14,12 +14,15 @@ import {
     ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard';
+import { CookieUser } from '../../utils/decorators/get-cookie-user';
+import { LoginDto } from '../../auth/dto/login.dto';
 
 /**
  * Controller class for 'transactions' endpoint
  */
 @ApiTags('Transactions')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @Controller('transactions')
 export class TransactionController {
     /**
@@ -33,11 +36,14 @@ export class TransactionController {
      */
     @ApiOperation({ summary: 'Get transactions' })
     @ApiInternalServerErrorResponse()
-    @ApiBearerAuth()
     @Get('/:accountId')
     async getTransactions(
         @Param('accountId', ParseUUIDPipe) accountId: string,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<Transaction[]> {
-        return this.transactionService.findAllById(accountId);
+        return this.transactionService.findAllById(
+            accountId,
+            cookieUser.username,
+        );
     }
 }

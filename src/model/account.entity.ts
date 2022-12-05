@@ -1,6 +1,7 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Transaction } from './transaction.entity';
+import { Client } from './client.entity';
 
 /**
  * Account Entity
@@ -15,6 +16,12 @@ export class Account extends BaseEntity {
 
     @OneToMany(() => Transaction, (transaction) => transaction.account)
     transactions: Transaction[];
+
+    @ManyToOne(() => Client, (client) => client.accounts, {
+        cascade: true,
+    })
+    @JoinColumn({ name: 'person_id' })
+    client: Client;
     /**
      * Column "balance"
      */

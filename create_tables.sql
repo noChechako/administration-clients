@@ -37,10 +37,10 @@ CREATE TABLE "clients"
     );
 
 ALTER TABLE "accounts"
-    ADD CONSTRAINT "accounts_fk_clients_pk" FOREIGN KEY ("person_id") REFERENCES "clients" ("id");
+    ADD CONSTRAINT "accounts_fk_clients_pk" FOREIGN KEY ("person_id") REFERENCES "clients" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "transactions"
-    ADD CONSTRAINT "transactions_fk_accounts_pk" FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
+    ADD CONSTRAINT "transactions_fk_accounts_pk" FOREIGN KEY ("account_id") REFERENCES "accounts" ("id") ON DELETE CASCADE;
 
 INSERT INTO clients(id, name, document, birth_date) VALUES
 ('a21ab04c-7212-11ed-a1eb-0242ac120002', 'John', '1DA4CVFA00D', '1995-10-12');

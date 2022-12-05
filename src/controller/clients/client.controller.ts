@@ -7,20 +7,27 @@ import {
     ParseUUIDPipe,
     Post,
     Put,
+    UseGuards,
 } from '@nestjs/common';
 import {
+    ApiBearerAuth,
     ApiInternalServerErrorResponse,
     ApiNotFoundResponse,
     ApiOperation,
+    ApiTags,
 } from '@nestjs/swagger';
 import { ClientService } from '../../service/clients/client.service';
 import { ClientCreateDto } from './dto/request/client.create.dto';
 import { Client } from '../../model/client.entity';
 import { ClientUpdateDto } from './dto/request/client.update.dto';
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard';
+import { CookieUser } from '../../utils/decorators/get-cookie-user';
+import { LoginDto } from '../../auth/dto/login.dto';
 
 /**
  * Controller class for 'clients' endpoint
  */
+@ApiTags('Clients')
 @Controller('clients')
 export class ClientController {
     /**
@@ -48,11 +55,14 @@ export class ClientController {
     @ApiOperation({ summary: 'Get client by id' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @Get('/:clientId')
     async getClient(
         @Param('clientId', ParseUUIDPipe) clientId: string,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<Client> {
-        return this.clientService.getClient(clientId);
+        return this.clientService.getClient(clientId, cookieUser.username);
     }
 
     /**
@@ -63,12 +73,19 @@ export class ClientController {
     @ApiOperation({ summary: 'Update client by id' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @Put('/:clientId')
     async updateClient(
         @Param('clientId', ParseUUIDPipe) clientId: string,
         @Body() clientUpdateDto: ClientUpdateDto,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<Client> {
-        return this.clientService.updateClient(clientId, clientUpdateDto);
+        return this.clientService.updateClient(
+            clientId,
+            clientUpdateDto,
+            cookieUser.username,
+        );
     }
 
     /**
@@ -78,10 +95,13 @@ export class ClientController {
     @ApiOperation({ summary: 'Delete client be id' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
     @Delete('/:clientId')
     async deleteClient(
         @Param('clientId', ParseUUIDPipe) clientId: string,
+        @CookieUser() cookieUser: LoginDto,
     ): Promise<void> {
-        return this.clientService.deleteClient(clientId);
+        return this.clientService.deleteClient(clientId, cookieUser.username);
     }
 }

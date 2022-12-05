@@ -1,5 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { Account } from './account.entity';
 
 /**
  * Client Entity
@@ -23,4 +24,7 @@ export class Client extends BaseEntity {
      */
     @Column({ type: 'date' })
     birthDate: string;
+
+    @OneToMany(() => Account, (account) => account.client)
+    accounts: Account[];
 }

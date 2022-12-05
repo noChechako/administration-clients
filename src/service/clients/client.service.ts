@@ -1,15 +1,23 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { Client } from '../../model/client.entity';
 import { ClientCreateDto } from '../../controller/clients/dto/request/client.create.dto';
 import { ClientRepositoryService } from '../../repository/clients/client-repository.service';
 import { ClientUpdateDto } from '../../controller/clients/dto/request/client.update.dto';
+import { AccountRepositoryService } from '../../repository/accounts/account-repository.service';
 
 /**
  * Service class for 'client' controller
  */
 @Injectable()
 export class ClientService {
-    constructor(protected readonly clientRepository: ClientRepositoryService) {}
+    constructor(
+        protected readonly clientRepository: ClientRepositoryService,
+        protected readonly accountRepository: AccountRepositoryService,
+    ) {}
 
     /**
      * Create client
@@ -25,9 +33,17 @@ export class ClientService {
     /**
      * Get client by id
      * @param clientId Client id string
+     * @param cookieUsername cookieUsername string
      */
-    public async getClient(clientId: string): Promise<Client> {
+    public async getClient(
+        clientId: string,
+        cookieUsername: string,
+    ): Promise<Client> {
         const client = await this.clientRepository.findOne(clientId);
+
+        if (client?.name !== cookieUsername || !cookieUsername) {
+            throw new ForbiddenException('You cannot see info this account');
+        }
 
         if (!client) {
             throw new NotFoundException(`Client with id:${clientId} not found`);
@@ -54,12 +70,18 @@ export class ClientService {
      * Update client
      * @param clientId Client id string
      * @param clientUpdateDto ClientUpdateDto object
+     * @param cookieUsername cookieUsername string
      */
     public async updateClient(
         clientId: string,
         clientUpdateDto: ClientUpdateDto,
+        cookieUsername: string,
     ): Promise<Client> {
         const client = await this.clientRepository.findOne(clientId);
+
+        if (client?.name !== cookieUsername || !cookieUsername) {
+            throw new ForbiddenException('You cannot see info this account');
+        }
 
         if (!client) {
             throw new NotFoundException(`Client with id:${clientId} not found`);
@@ -74,14 +96,22 @@ export class ClientService {
     /**
      * Delete client
      * @param clientId Client id string
+     * @param cookieUsername cookieUsername string
      */
-    public async deleteClient(clientId: string): Promise<void> {
+    public async deleteClient(
+        clientId: string,
+        cookieUsername: string,
+    ): Promise<void> {
         const client = await this.clientRepository.findOne(clientId);
 
+        if (client?.name !== cookieUsername || !cookieUsername) {
+            throw new ForbiddenException('You cannot see info this account');
+        }
         if (!client) {
             throw new NotFoundException(`Client with id:${clientId} not found`);
         }
 
+        await this.accountRepository.deleteByClientId(clientId);
         await this.clientRepository.delete(clientId);
     }
 }

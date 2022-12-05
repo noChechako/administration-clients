@@ -2,6 +2,7 @@ import {
     ConflictException,
     NotFoundException,
     Injectable,
+    ForbiddenException,
 } from '@nestjs/common';
 import { Account } from '../../model/account.entity';
 import { AccountCreateDto } from '../../controller/accounts/dto/request/account.create.dto';
@@ -39,12 +40,22 @@ export class AccountService {
      * @param id Account id string
      * @param type ChangeBalanceTypeEnum enum
      * @param balanceRefillUpdateDto BalanceRefillUpdateDto object
+     * @param cookieUsername cookieUsername string
      */
     public async changeBalance(
         id: string,
         type: ChangeBalanceTypeEnum,
         balanceRefillUpdateDto: BalanceRefillUpdateDto,
+        cookieUsername: string,
     ): Promise<Account> {
+        const client = await this.accountRepository.findClientNameByClientId(
+            id,
+            cookieUsername,
+        );
+        if (client?.name !== cookieUsername || !cookieUsername) {
+            throw new ForbiddenException('You cannot see info this account');
+        }
+
         const account = await this.accountRepository.findOne(id);
 
         if (!account) {
@@ -112,6 +123,7 @@ export class AccountService {
             accountId: account.id,
             value,
             transactionDate: new Date().toISOString(),
+            account: updatedAccount,
         };
         await this.transactionRepository.save(transaction);
 
@@ -121,8 +133,20 @@ export class AccountService {
     /**
      * Get balance
      * @param id Account id string
+     * @param cookieUsername cookieUsername string
      */
-    public async getBalance(id: string): Promise<GetBalanceDto> {
+    public async getBalance(
+        id: string,
+        cookieUsername: string,
+    ): Promise<GetBalanceDto> {
+        const client = await this.accountRepository.findClientNameByClientId(
+            id,
+            cookieUsername,
+        );
+        if (client?.name !== cookieUsername || !cookieUsername) {
+            throw new ForbiddenException('You cannot see info this account');
+        }
+
         const account = await this.accountRepository.findOne(id);
 
         if (!account) {
@@ -138,8 +162,21 @@ export class AccountService {
      * Change balance
      * @param id Account id string
      * @param Active Status boolean
+     * @param cookieUsername cookieUsername string
      */
-    public async changeStatus(id: string, active: boolean): Promise<Account> {
+    public async changeStatus(
+        id: string,
+        active: boolean,
+        cookieUsername: string,
+    ): Promise<Account> {
+        const client = await this.accountRepository.findClientNameByClientId(
+            id,
+            cookieUsername,
+        );
+        if (client?.name !== cookieUsername || !cookieUsername) {
+            throw new ForbiddenException('You cannot see info this account');
+        }
+
         const account = await this.accountRepository.findOne(id);
 
         if (!account) {

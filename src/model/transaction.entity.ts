@@ -13,9 +13,11 @@ export class Transaction extends BaseEntity {
     @Column({ type: 'uuid' })
     accountId: string;
 
-    @ManyToOne(() => Account, (account) => account.transactions)
+    @ManyToOne(() => Account, (account) => account.transactions, {
+        cascade: true,
+    })
     @JoinColumn({ name: 'account_id' })
-    account?: Account;
+    account: Account;
     /**
      * Column "value"
      */

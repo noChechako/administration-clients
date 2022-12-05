@@ -5,6 +5,8 @@ logic of this application imposes some restrictions. For example, if the account
 not be able to change the balance. If the limit is exceeded `dailyWithdrawalLimit`, the user will not be able to
 withdraw money
 
+###### This app has simple auth. Clients cannot see info about different clients
+
 ## Preparing
 
 You should create `.env` file. It contains all the necessary variables for correct operation. Here are the need values:
