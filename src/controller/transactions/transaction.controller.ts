@@ -21,7 +21,7 @@ export class TransactionController {
     @ApiOperation({ summary: 'Get transactions' })
     @ApiInternalServerErrorResponse()
     @Get('/:accountId')
-    async getTransactions(@Param('accountId', ParseUUIDPipe) accountId: string,): Promise<Transaction[]> {
+    async getTransactions(@Param('accountId', ParseUUIDPipe) accountId: string): Promise<Transaction[]> {
         return this.transactionService.findAllById(accountId);
     }
 }

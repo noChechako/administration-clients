@@ -45,7 +45,7 @@ export class AccountCreateDto {
         example: 100,
     })
     @IsBoolean()
-    active: boolean;
+    active?: boolean;
 
     /**
      * Column "accountType"
@@ -60,12 +60,12 @@ export class AccountCreateDto {
     accountType: number;
 
     /**
-     * Column "personId"
+     * Column "createDate"
      */
     @ApiProperty({
         description: 'date',
         example: '2020-10-11',
     })
     @IsString()
-    date: string;
+    createDate?: string;
 }

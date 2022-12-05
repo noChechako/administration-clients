@@ -3,13 +3,15 @@ import {AccountControllerModule} from "./controller/accounts/account-controller.
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {configService} from "./config/config.service";
 import {TransactionControllerModule} from "./controller/transactions/transaction-controller.module";
+import {ClientControllerModule} from "./controller/clients/client-controller.module";
 
 @Module({
 
     imports: [
         TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
         AccountControllerModule,
-        TransactionControllerModule
+        TransactionControllerModule,
+        ClientControllerModule
     ],
     controllers: [],
     providers: [],
