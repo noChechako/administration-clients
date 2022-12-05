@@ -1,13 +1,19 @@
-import {Controller, Get, Param, ParseUUIDPipe, UseGuards} from '@nestjs/common';
-import {Transaction} from '../../model/transaction.entity';
-import {TransactionService} from '../../service/transactions/transaction.service';
+import {
+    Controller,
+    Get,
+    Param,
+    ParseUUIDPipe,
+    UseGuards,
+} from '@nestjs/common';
+import { Transaction } from '../../model/transaction.entity';
+import { TransactionService } from '../../service/transactions/transaction.service';
 import {
     ApiBearerAuth,
     ApiInternalServerErrorResponse,
     ApiOperation,
     ApiTags,
 } from '@nestjs/swagger';
-import {JwtAuthGuard} from "../../auth/jwt/jwt-auth.guard";
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard';
 
 /**
  * Controller class for 'transactions' endpoint
@@ -19,8 +25,7 @@ export class TransactionController {
     /**
      * Constructor
      */
-    constructor(private readonly transactionService: TransactionService) {
-    }
+    constructor(private readonly transactionService: TransactionService) {}
 
     /**
      * Get transactions

@@ -1,6 +1,6 @@
-import {Entity, Column, ManyToOne, JoinColumn} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import {Account} from "./account.entity";
+import { Account } from './account.entity';
 
 /**
  * Transaction Entity
@@ -15,7 +15,7 @@ export class Transaction extends BaseEntity {
 
     @ManyToOne(() => Account, (account) => account.transactions)
     @JoinColumn({ name: 'account_id' })
-    account?: Account
+    account?: Account;
     /**
      * Column "value"
      */

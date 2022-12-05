@@ -5,7 +5,7 @@ import { configService } from './config/config.service';
 import { TransactionControllerModule } from './controller/transactions/transaction-controller.module';
 import { ClientControllerModule } from './controller/clients/client-controller.module';
 import { AuthModule } from './auth/auth.module';
-import {AuthController} from "./auth/auth.controller";
+import { AuthController } from './auth/auth.controller';
 
 @Module({
     imports: [

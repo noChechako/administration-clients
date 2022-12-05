@@ -6,7 +6,8 @@ import {
     ParseUUIDPipe,
     Post,
     Put,
-    Query, UseGuards,
+    Query,
+    UseGuards,
 } from '@nestjs/common';
 import { AccountService } from '../../service/accounts/account.service';
 import { AccountCreateDto } from './dto/request/account.create.dto';
@@ -23,7 +24,7 @@ import {
 } from '@nestjs/swagger';
 import { ChangeBalanceTypeEnum } from '../../utils/enums/change-balance-type.enum';
 import { SkipThrottle } from '@nestjs/throttler';
-import {AuthGuard} from "@nestjs/passport";
+import { AuthGuard } from '@nestjs/passport';
 
 /**
  * Controller class for 'accounts' endpoint

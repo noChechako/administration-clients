@@ -1,6 +1,6 @@
-import {Entity, Column, OneToMany} from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import {Transaction} from "./transaction.entity";
+import { Transaction } from './transaction.entity';
 
 /**
  * Account Entity
@@ -14,7 +14,7 @@ export class Account extends BaseEntity {
     personId: string;
 
     @OneToMany(() => Transaction, (transaction) => transaction.account)
-    transactions: Transaction[]
+    transactions: Transaction[];
     /**
      * Column "balance"
      */
