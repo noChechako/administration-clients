@@ -1,5 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import {Entity, Column, OneToMany} from 'typeorm';
 import { BaseEntity } from './base.entity';
+import {Transaction} from "./transaction.entity";
 
 /**
  * Account Entity
@@ -12,6 +13,8 @@ export class Account extends BaseEntity {
     @Column({ type: 'uuid' })
     personId: string;
 
+    @OneToMany(() => Transaction, (transaction) => transaction.account)
+    transactions: Transaction[]
     /**
      * Column "balance"
      */

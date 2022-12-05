@@ -42,6 +42,17 @@ export class ClientRepositoryService {
     }
 
     /**
+     * Find one client by name
+     * @param name Client name string
+     */
+    public async findOneByName(name: string): Promise<Client | null> {
+        try {
+            return await this.clientRepository.findOneByOrFail({ name });
+        } catch (e) {
+            return null;
+        }
+    }
+    /**
      * Delete client by id
      * @param id Client id string
      */

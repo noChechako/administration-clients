@@ -6,7 +6,7 @@ import {
     ParseUUIDPipe,
     Post,
     Put,
-    Query,
+    Query, UseGuards,
 } from '@nestjs/common';
 import { AccountService } from '../../service/accounts/account.service';
 import { AccountCreateDto } from './dto/request/account.create.dto';
@@ -14,6 +14,7 @@ import { BalanceRefillUpdateDto } from './dto/request/balance-refill.update.dto'
 import { GetBalanceDto } from './dto/response/get-balance.dto';
 import { Account } from '../../model/account.entity';
 import {
+    ApiBearerAuth,
     ApiInternalServerErrorResponse,
     ApiNotFoundResponse,
     ApiOperation,
@@ -22,12 +23,15 @@ import {
 } from '@nestjs/swagger';
 import { ChangeBalanceTypeEnum } from '../../utils/enums/change-balance-type.enum';
 import { SkipThrottle } from '@nestjs/throttler';
+import {AuthGuard} from "@nestjs/passport";
 
 /**
  * Controller class for 'accounts' endpoint
  */
 @ApiTags('Accounts')
 @SkipThrottle()
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Controller('accounts')
 export class AccountController {
     /**

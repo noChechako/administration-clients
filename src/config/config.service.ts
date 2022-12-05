@@ -32,6 +32,14 @@ class ConfigService {
         return this.getValue('LIMIT_GET_BALANCE', true);
     }
 
+    public getJwtSecretKey() {
+        return this.getValue('JWT_SECRET_KEY', true);
+    }
+
+    public getJwtExpire() {
+        return this.getValue('JWT_EXPIRE', true);
+    }
+
     public getTypeOrmConfig(): TypeOrmModuleOptions {
         return {
             type: 'postgres',

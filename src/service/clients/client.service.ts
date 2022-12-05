@@ -23,7 +23,7 @@ export class ClientService {
     }
 
     /**
-     * Get client
+     * Get client by id
      * @param clientId Client id string
      */
     public async getClient(clientId: string): Promise<Client> {
@@ -31,6 +31,20 @@ export class ClientService {
 
         if (!client) {
             throw new NotFoundException(`Client with id:${clientId} not found`);
+        }
+
+        return client;
+    }
+
+    /**
+     * Get client by name
+     * @param clientId Client id string
+     */
+    public async getClientByName(name: string): Promise<Client> {
+        const client = await this.clientRepository.findOneByName(name);
+
+        if (!client) {
+            throw new NotFoundException(`Client with name:${name} not found`);
         }
 
         return client;

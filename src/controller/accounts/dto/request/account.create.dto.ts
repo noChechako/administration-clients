@@ -45,7 +45,7 @@ export class AccountCreateDto {
      */
     @ApiProperty({
         description: 'active',
-        example: 100,
+        example: true,
     })
     @IsBoolean()
     active?: boolean;
