@@ -1,5 +1,5 @@
-import {ApiProperty} from '@nestjs/swagger';
-import {IsNumber, IsPositive} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsPositive } from 'class-validator';
 
 export class BalanceRefillUpdateDto {
     /**
@@ -8,7 +8,7 @@ export class BalanceRefillUpdateDto {
     @ApiProperty({
         description: 'value',
         example: 1.3,
-        required: true
+        required: true,
     })
     @IsNumber()
     @IsPositive()

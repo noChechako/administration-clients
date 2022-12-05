@@ -3,8 +3,7 @@ import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'transactions' })
 export class Transaction extends BaseEntity {
-
-    @Column({type: 'uuid'})
+    @Column({ type: 'uuid' })
     accountId: string;
 
     @Column({ type: 'double precision' })

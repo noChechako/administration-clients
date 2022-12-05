@@ -1,15 +1,16 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import {Client} from "../../model/client.entity";
-import {ClientCreateDto} from "../../controller/clients/dto/request/client.create.dto";
-import {ClientRepositoryService} from "../../repository/clients/client-repository.service";
-import {ClientUpdateDto} from "../../controller/clients/dto/request/client.update.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Client } from '../../model/client.entity';
+import { ClientCreateDto } from '../../controller/clients/dto/request/client.create.dto';
+import { ClientRepositoryService } from '../../repository/clients/client-repository.service';
+import { ClientUpdateDto } from '../../controller/clients/dto/request/client.update.dto';
 
 @Injectable()
 export class ClientService {
-    constructor(protected readonly clientRepository: ClientRepositoryService) {
-    }
+    constructor(protected readonly clientRepository: ClientRepositoryService) {}
 
-    public async createClient(clientCreateDto: ClientCreateDto): Promise<Client> {
+    public async createClient(
+        clientCreateDto: ClientCreateDto,
+    ): Promise<Client> {
         const savedClient = await this.clientRepository.save(clientCreateDto);
         return savedClient;
     }
@@ -24,14 +25,19 @@ export class ClientService {
         return client;
     }
 
-    public async updateClient(clientId: string, clientUpdateDto: ClientUpdateDto): Promise<Client> {
+    public async updateClient(
+        clientId: string,
+        clientUpdateDto: ClientUpdateDto,
+    ): Promise<Client> {
         const client = await this.clientRepository.findOne(clientId);
 
         if (!client) {
             throw new NotFoundException(`Client with id:${clientId} not found`);
         }
 
-        const updatedClient = await this.clientRepository.save(Object.assign(client, clientUpdateDto));
+        const updatedClient = await this.clientRepository.save(
+            Object.assign(client, clientUpdateDto),
+        );
         return updatedClient;
     }
 

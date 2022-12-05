@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString} from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class ClientCreateDto {
     /**
@@ -8,7 +8,7 @@ export class ClientCreateDto {
     @ApiProperty({
         description: 'Name of client',
         example: 'John Doe',
-        required: true
+        required: true,
     })
     @IsString()
     name: string;
@@ -19,7 +19,7 @@ export class ClientCreateDto {
     @ApiProperty({
         description: 'Document',
         example: '12234FFASBV5',
-        required: true
+        required: true,
     })
     @IsString()
     document: string;

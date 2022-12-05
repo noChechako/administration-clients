@@ -3,8 +3,7 @@ import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'clients' })
 export class Client extends BaseEntity {
-
-    @Column({type: 'varchar'})
+    @Column({ type: 'varchar' })
     name: string;
 
     @Column({ type: 'varchar' })
@@ -12,5 +11,4 @@ export class Client extends BaseEntity {
 
     @Column({ type: 'date' })
     birthDate: string;
-
 }

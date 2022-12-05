@@ -1,9 +1,22 @@
-import {Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put} from '@nestjs/common';
-import {ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiOperation} from "@nestjs/swagger";
-import {ClientService} from "../../service/clients/client.service";
-import {ClientCreateDto} from "./dto/request/client.create.dto";
-import {Client} from "../../model/client.entity";
-import {ClientUpdateDto} from "./dto/request/client.update.dto";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseUUIDPipe,
+    Post,
+    Put,
+} from '@nestjs/common';
+import {
+    ApiInternalServerErrorResponse,
+    ApiNotFoundResponse,
+    ApiOperation,
+} from '@nestjs/swagger';
+import { ClientService } from '../../service/clients/client.service';
+import { ClientCreateDto } from './dto/request/client.create.dto';
+import { Client } from '../../model/client.entity';
+import { ClientUpdateDto } from './dto/request/client.update.dto';
 
 /**
  * Controller class for 'clients' endpoint
@@ -18,7 +31,9 @@ export class ClientController {
     @ApiOperation({ summary: 'Create client' })
     @ApiInternalServerErrorResponse()
     @Post('/')
-    async createAccount(@Body() clientCreateDto: ClientCreateDto): Promise<Client> {
+    async createAccount(
+        @Body() clientCreateDto: ClientCreateDto,
+    ): Promise<Client> {
         return this.clientService.createClient(clientCreateDto);
     }
 
@@ -26,7 +41,9 @@ export class ClientController {
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
     @Get('/:clientId')
-    async getClient(@Param('clientId', ParseUUIDPipe) clientId: string): Promise<Client> {
+    async getClient(
+        @Param('clientId', ParseUUIDPipe) clientId: string,
+    ): Promise<Client> {
         return this.clientService.getClient(clientId);
     }
 
@@ -34,8 +51,10 @@ export class ClientController {
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
     @Put('/:clientId')
-    async updateClient(@Param('clientId', ParseUUIDPipe) clientId: string,
-                       @Body() clientUpdateDto: ClientUpdateDto): Promise<Client> {
+    async updateClient(
+        @Param('clientId', ParseUUIDPipe) clientId: string,
+        @Body() clientUpdateDto: ClientUpdateDto,
+    ): Promise<Client> {
         return this.clientService.updateClient(clientId, clientUpdateDto);
     }
 
@@ -43,7 +62,9 @@ export class ClientController {
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
     @Delete('/:clientId')
-    async deleteClient(@Param('clientId', ParseUUIDPipe) clientId: string): Promise<void> {
+    async deleteClient(
+        @Param('clientId', ParseUUIDPipe) clientId: string,
+    ): Promise<void> {
         return this.clientService.deleteClient(clientId);
     }
 }

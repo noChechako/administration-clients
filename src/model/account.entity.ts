@@ -3,8 +3,7 @@ import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'accounts' })
 export class Account extends BaseEntity {
-
-    @Column({type: 'uuid'})
+    @Column({ type: 'uuid' })
     personId: string;
 
     @Column({ type: 'double precision' })
@@ -21,5 +20,4 @@ export class Account extends BaseEntity {
 
     @Column({ type: 'date' })
     createDate: string;
-
 }

@@ -1,11 +1,11 @@
-import {Controller, Get, Param, ParseUUIDPipe} from '@nestjs/common';
-import {Transaction} from "../../model/transaction.entity";
-import {TransactionService} from "../../service/transactions/transaction.service";
+import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Transaction } from '../../model/transaction.entity';
+import { TransactionService } from '../../service/transactions/transaction.service';
 import {
     ApiInternalServerErrorResponse,
     ApiOperation,
-    ApiTags
-} from "@nestjs/swagger";
+    ApiTags,
+} from '@nestjs/swagger';
 
 /**
  * Controller class for 'transactions' endpoint
@@ -21,7 +21,9 @@ export class TransactionController {
     @ApiOperation({ summary: 'Get transactions' })
     @ApiInternalServerErrorResponse()
     @Get('/:accountId')
-    async getTransactions(@Param('accountId', ParseUUIDPipe) accountId: string): Promise<Transaction[]> {
+    async getTransactions(
+        @Param('accountId', ParseUUIDPipe) accountId: string,
+    ): Promise<Transaction[]> {
         return this.transactionService.findAllById(accountId);
     }
 }
