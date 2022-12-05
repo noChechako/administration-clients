@@ -51,3 +51,15 @@ $ docker-compose up
   <img src="https://seeklogo.com/images/S/swagger-logo-A49F73BAF4-seeklogo.com.png" height="80">
 </a>
 
+##Documentation
+
+For check documentation, you can run this command^ 
+```bash
+$ npm run compodoc
+```
+After this, in folder of the project you will see folder `documention`
+
+For check `coverage` documentation, you can run this command^
+```bash
+$ npm run compodoc:coverage
+```

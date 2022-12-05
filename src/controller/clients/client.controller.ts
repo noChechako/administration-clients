@@ -28,6 +28,10 @@ export class ClientController {
      */
     constructor(private readonly clientService: ClientService) {}
 
+    /**
+     * Create client
+     * @param clientCreateDto ClientCreateDto object
+     */
     @ApiOperation({ summary: 'Create client' })
     @ApiInternalServerErrorResponse()
     @Post('/')
@@ -37,6 +41,10 @@ export class ClientController {
         return this.clientService.createClient(clientCreateDto);
     }
 
+    /**
+     * Get client by id
+     * @param clientId Client id string
+     */
     @ApiOperation({ summary: 'Get client by id' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
@@ -47,6 +55,11 @@ export class ClientController {
         return this.clientService.getClient(clientId);
     }
 
+    /**
+     * Update client by id
+     * @param clientId Client id string
+     * @param clientUpdateDto ClientUpdateDto object
+     */
     @ApiOperation({ summary: 'Update client by id' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
@@ -58,6 +71,10 @@ export class ClientController {
         return this.clientService.updateClient(clientId, clientUpdateDto);
     }
 
+    /**
+     * Delete client be id
+     * @param clientId Client id string
+     */
     @ApiOperation({ summary: 'Delete client be id' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()

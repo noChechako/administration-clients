@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNumber, IsPositive, IsString } from 'class-validator';
 
+/**
+ * DTO for creating "Account"
+ */
 export class AccountCreateDto {
     /**
      * Column "personId"

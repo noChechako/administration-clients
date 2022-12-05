@@ -4,6 +4,9 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+/**
+ * Config class
+ */
 class ConfigService {
     constructor(private env: { [k: string]: string | undefined }) {}
 

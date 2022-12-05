@@ -35,6 +35,10 @@ export class AccountController {
      */
     constructor(private readonly accountService: AccountService) {}
 
+    /**
+     * Create account
+     * @param accountCreateDto AccountCreateDto object
+     */
     @ApiOperation({ summary: 'Create account' })
     @ApiInternalServerErrorResponse()
     @Post('/')
@@ -44,6 +48,12 @@ export class AccountController {
         return this.accountService.createAccount(accountCreateDto);
     }
 
+    /**
+     * Change balance
+     * @param id Account id string
+     * @param type ChangeBalanceTypeEnum enum
+     * @param balanceRefillUpdateDto BalanceRefillUpdateDto object
+     */
     @ApiOperation({ summary: 'Change balance' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
@@ -61,6 +71,11 @@ export class AccountController {
         );
     }
 
+    /**
+     * Change status
+     * @param id Account id string
+     * @param active Status boolean
+     */
     @ApiOperation({ summary: 'Change status' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()
@@ -72,6 +87,10 @@ export class AccountController {
         return this.accountService.changeStatus(id, active);
     }
 
+    /**
+     * Get account balance
+     * @param id Account id string
+     */
     @ApiOperation({ summary: 'Get account balance' })
     @ApiNotFoundResponse()
     @ApiInternalServerErrorResponse()

@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsPositive } from 'class-validator';
 
+/**
+ * DTO for response check balance
+ */
 export class GetBalanceDto {
     /**
      * Column "balance"

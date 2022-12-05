@@ -1,6 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
+/**
+ * DTO for creating "Client"
+ */
 export class ClientCreateDto {
     /**
      * Column "name"

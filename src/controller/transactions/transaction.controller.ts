@@ -18,6 +18,10 @@ export class TransactionController {
      */
     constructor(private readonly transactionService: TransactionService) {}
 
+    /**
+     * Get transactions
+     * @param accountId Account id string
+     */
     @ApiOperation({ summary: 'Get transactions' })
     @ApiInternalServerErrorResponse()
     @Get('/:accountId')

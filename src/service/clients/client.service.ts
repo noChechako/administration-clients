@@ -4,10 +4,17 @@ import { ClientCreateDto } from '../../controller/clients/dto/request/client.cre
 import { ClientRepositoryService } from '../../repository/clients/client-repository.service';
 import { ClientUpdateDto } from '../../controller/clients/dto/request/client.update.dto';
 
+/**
+ * Service class for 'client' controller
+ */
 @Injectable()
 export class ClientService {
     constructor(protected readonly clientRepository: ClientRepositoryService) {}
 
+    /**
+     * Create client
+     * @param clientCreateDto ClientCreateDto object
+     */
     public async createClient(
         clientCreateDto: ClientCreateDto,
     ): Promise<Client> {
@@ -15,6 +22,10 @@ export class ClientService {
         return savedClient;
     }
 
+    /**
+     * Get client
+     * @param clientId Client id string
+     */
     public async getClient(clientId: string): Promise<Client> {
         const client = await this.clientRepository.findOne(clientId);
 
@@ -25,6 +36,11 @@ export class ClientService {
         return client;
     }
 
+    /**
+     * Update client
+     * @param clientId Client id string
+     * @param clientUpdateDto ClientUpdateDto object
+     */
     public async updateClient(
         clientId: string,
         clientUpdateDto: ClientUpdateDto,
@@ -41,6 +57,10 @@ export class ClientService {
         return updatedClient;
     }
 
+    /**
+     * Delete client
+     * @param clientId Client id string
+     */
     public async deleteClient(clientId: string): Promise<void> {
         const client = await this.clientRepository.findOne(clientId);
 

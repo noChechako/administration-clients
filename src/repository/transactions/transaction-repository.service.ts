@@ -3,6 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Between, LessThan, Repository } from 'typeorm';
 import { Transaction } from '../../model/transaction.entity';
 
+/**
+ * Service class for 'transaction' service
+ */
 @Injectable()
 export class TransactionRepositoryService {
     /**
@@ -13,6 +16,10 @@ export class TransactionRepositoryService {
         private readonly transactionRepository: Repository<Transaction>,
     ) {}
 
+    /**
+     * Save transaction
+     * @param client Transaction object
+     */
     public async save(transaction: Transaction): Promise<Transaction> {
         try {
             return this.transactionRepository.save(transaction);
@@ -21,6 +28,12 @@ export class TransactionRepositoryService {
         }
     }
 
+    /**
+     * Find all transaction by day
+     * @param accountId Account id string
+     * @param beforeOneDayDate Previous day string
+     * @param afterOneDayDate Next day string
+     */
     public async findAllByDay(
         accountId: string,
         beforeOneDayDate: string,
@@ -39,6 +52,10 @@ export class TransactionRepositoryService {
         }
     }
 
+    /**
+     * Find all transaction by id
+     * @param accountId Account id string
+     */
     public async findAllById(accountId: string): Promise<Transaction[]> {
         try {
             return this.transactionRepository.find({

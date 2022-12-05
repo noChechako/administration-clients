@@ -4,6 +4,9 @@ import { Account } from '../../model/account.entity';
 import { Repository } from 'typeorm';
 import { AccountCreateDto } from '../../controller/accounts/dto/request/account.create.dto';
 
+/**
+ * Service class for 'account' service
+ */
 @Injectable()
 export class AccountRepositoryService {
     /**
@@ -14,6 +17,10 @@ export class AccountRepositoryService {
         private readonly accountRepository: Repository<Account>,
     ) {}
 
+    /**
+     * Save account
+     * @param accountCreateDto AccountCreateDto | Account object
+     */
     public async save(
         accountCreateDto: AccountCreateDto | Account,
     ): Promise<Account> {
@@ -24,6 +31,10 @@ export class AccountRepositoryService {
         }
     }
 
+    /**
+     * Find one account
+     * @param id Account id string
+     */
     public async findOne(id: string): Promise<Account | null> {
         try {
             return await this.accountRepository.findOneByOrFail({ id });

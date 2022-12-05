@@ -13,6 +13,9 @@ import { TransactionRepositoryService } from '../../repository/transactions/tran
 import { DAY_IN_SEC } from '../../utils/constans/constans';
 import formatDate from '../../utils/functions/get-date';
 
+/**
+ * Service class for 'account' controller
+ */
 @Injectable()
 export class AccountService {
     constructor(
@@ -20,6 +23,10 @@ export class AccountService {
         protected readonly transactionRepository: TransactionRepositoryService,
     ) {}
 
+    /**
+     * Create account
+     * @param accountCreateDto AccountCreateDto object
+     */
     public async createAccount(
         accountCreateDto: AccountCreateDto,
     ): Promise<Account> {
@@ -27,6 +34,12 @@ export class AccountService {
         return savedUser;
     }
 
+    /**
+     * Change balance
+     * @param id Account id string
+     * @param type ChangeBalanceTypeEnum enum
+     * @param balanceRefillUpdateDto BalanceRefillUpdateDto object
+     */
     public async changeBalance(
         id: string,
         type: ChangeBalanceTypeEnum,
@@ -105,6 +118,10 @@ export class AccountService {
         return Object.assign(account, updatedAccount);
     }
 
+    /**
+     * Get balance
+     * @param id Account id string
+     */
     public async getBalance(id: string): Promise<GetBalanceDto> {
         const account = await this.accountRepository.findOne(id);
 
@@ -117,6 +134,11 @@ export class AccountService {
         };
     }
 
+    /**
+     * Change balance
+     * @param id Account id string
+     * @param Active Status boolean
+     */
     public async changeStatus(id: string, active: boolean): Promise<Account> {
         const account = await this.accountRepository.findOne(id);
 
