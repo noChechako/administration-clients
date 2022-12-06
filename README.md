@@ -67,5 +67,4 @@ For check `coverage` documentation, you can run this command:
 $ npm run compodoc:coverage
 ```
 
-VIDEO
-https://dropmefiles.com/eB5Qf
+##Demo on file Demo.mp4
